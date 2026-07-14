@@ -1,0 +1,27 @@
+Lang/zh-CN.json
+  s_9e81e2213cd15e::t_1d620787dfa1ee 1-907
+Lang/ko-KR.json
+  s_9e81e2213cd15e::t_82a5cba78fb971 1-907
+Lang/en-US.json
+  s_9e81e2213cd15e::t_a75457d828d876 1-907
+.gitignore
+  s_9e81e2213cd15e::t_014cb33f4a13de 1
+scripts/validate.py
+  s_9e81e2213cd15e::t_40a866af8da6da 1-78
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.13",
+  "base_commit_sha": "ed47adf3e2b84d86bd46446fccea40bf8fc5d169",
+  "prompts": {},
+  "sessions": {
+    "s_9e81e2213cd15e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6e9d6da4-0aa9-4dd9-a90a-ec2e67be0ffa",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "koren <131921956+kkorenn@users.noreply.github.com>"
+    }
+  }
+}
