@@ -1,0 +1,36 @@
+name: manifest
+
+# Regenerates manifest.json (sha256 of every language file) whenever Lang/ changes,
+# so the mod can tell what actually changed and skip downloading the rest.
+#
+# No self-retrigger: this filters on Lang/**, and the manifest it commits lives at
+# the repo root. (Pushes made with GITHUB_TOKEN don't fire workflow events either —
+# belt and suspenders.)
+on:
+  push:
+    branches: [main]
+    paths:
+      - "Lang/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate manifest.json
+        run: python3 scripts/gen_manifest.py Lang manifest.json
+      - name: Commit if changed
+        run: |
+          git config user.name "quartz-i18n-bot"
+          git config user.email "i18n-bot@users.noreply.github.com"
+          git add manifest.json
+          if git diff --cached --quiet; then
+            echo "manifest unchanged"
+            exit 0
+          fi
+          git commit -m "chore: regenerate manifest.json"
+          git push
