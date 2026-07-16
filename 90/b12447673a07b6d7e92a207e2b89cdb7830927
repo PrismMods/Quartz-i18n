@@ -1,0 +1,23 @@
+.gitattributes
+  s_cb94c26d2d3250::t_094cf5df9b0b1b 1-9
+Lang/zh-CN.json
+  s_cb94c26d2d3250::t_97faed558175e2 1-936
+manifest.json
+  s_cb94c26d2d3250::t_ea6726da96c73b 5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "90b12447673a07b6d7e92a207e2b89cdb7830927",
+  "prompts": {},
+  "sessions": {
+    "s_cb94c26d2d3250": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "99bdcc1e-27b5-4d94-b7e7-a9ece3380c50",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "koren <131921956+kkorenn@users.noreply.github.com>"
+    }
+  }
+}
