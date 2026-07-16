@@ -1,0 +1,9 @@
+# The mod fetches these files by sha256 (manifest.json) and writes the downloaded
+# bytes to disk verbatim, so the bytes here must stay byte-identical to the bytes
+# the mod bundles — which come from the Quartz repo, where the same files are
+# LF-normalized. Any CRLF here makes manifest.json's hash unmatchable by a bundled
+# file, and the mod re-downloads that language on every fresh install, forever.
+#
+# eol=lf pins the WORKING TREE, not just the index: `text=auto` alone would leave
+# a Windows translator's checkout as CRLF and let them commit it straight back.
+*.json text eol=lf
