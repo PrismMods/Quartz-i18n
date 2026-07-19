@@ -1136,6 +1136,10 @@
     "KVI_TOOLBAR_HINT": "滚动平移，或使用鼠标中键/右键拖动；按+/-缩放，0恢复实际大小；方向键微调，Delete删除。",
     "KVI_HIDDEN": "隐藏",
     "DESC_KVI_HIDDEN": "在布局中保留选中元素但在游戏中不绘制；隐藏的元素在画布上变暗且无法点击。",
-    "KVI_EMPTY": "在画布上选择元素进行编辑；拖动框选多个可一起编辑。"
+    "KVI_EMPTY": "在画布上选择元素进行编辑；拖动框选多个可一起编辑。",
+    "KEYVIEWER_DM_LIMITER_FULL_PRESS": "完全显示",
+    "KEYVIEWER_DM_LIMITER_HIDE": "直接隐藏",
+    "KEYVIEWER_DM_LIMITER_LABEL": "超出限制按键",
+    "KEYVIEWER_DM_LIMITER_RAIN_ONLY": "仅保留雨键"
   }
 }
