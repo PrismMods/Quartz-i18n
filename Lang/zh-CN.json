@@ -1160,6 +1160,10 @@
     "EDITOR_FLIPROTATE_SHORTCUT_ROT_180": "Ctrl + / — 旋转选区180°",
     "TUF_PLAY": "游玩",
     "TUF_MAIN_LAUNCH_FAILED": "无法打开基础游戏谱面。",
-    "TUF_BUY_DLC": "购买DLC"
+    "TUF_BUY_DLC": "购买DLC",
+    "KEYVIEWER_DM_LIMITER_FULL_PRESS": "完全显示",
+    "KEYVIEWER_DM_LIMITER_HIDE": "直接隐藏",
+    "KEYVIEWER_DM_LIMITER_LABEL": "超出限制按键",
+    "KEYVIEWER_DM_LIMITER_RAIN_ONLY": "仅保留雨键"
   }
 }
