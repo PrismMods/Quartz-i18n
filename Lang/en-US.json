@@ -626,7 +626,7 @@
     "SECTION_AUTO_DEAFEN_DISCORD": "Auto Deafen (Discord)",
     "SECTION_PRACTICE_DIFFICULTY": "Practice Difficulty",
     "PRACTICE_ENABLE": "Enable Practice Difficulty",
-    "PRACTICE_HINT": "Bind a key to a difficulty and a pitch. Difficulty switches the moment you press it. Pitch is written into the level's own Pitch setting once, exactly as if you typed it in — the game picks it up on your next run, and you stay free to edit the field yourself afterwards.",
+    "PRACTICE_HINT": "Bind a key to a difficulty and a pitch. Both land between attempts, never mid-run: difficulty is held until the current attempt ends, and pitch is written into the level's own Pitch setting once, exactly as if you typed it in. The readout shows anything still queued with an arrow.",
     "PRACTICE_NO_BINDINGS": "No keys bound yet.",
     "PRACTICE_ADD": "Add Key",
     "DESC_PRACTICE_ADD": "Adds another key binding. Up to 16.",
@@ -883,6 +883,8 @@
     "DESC_TUF_LINK_HELPER": "Saves downloaded levels into TUFHelperLite's Downloads folder (as tuf-<id>) so both mods share one level library. Inside the game folder, UMMMods is checked first, then Mods.",
     "TUF_PREVIEWS": "Level Previews",
     "DESC_TUF_PREVIEWS": "Show a blurred preview image behind each level in the browser, taken from its YouTube video. Turn off to skip the thumbnail downloads.",
+    "TUF_GRID_VIEW": "Grid View",
+    "DESC_TUF_GRID_VIEW": "Lay the level browser out as a grid of cards instead of one column of rows. The column count follows the window width.",
     "TUF_INSTALLED": "Installed",
     "DESC_TUF_INSTALLED": "Show only the levels you have downloaded, newest first. Works offline.",
     "TUF_INSTALLED_EMPTY": "You have not downloaded any levels yet.",
@@ -1229,6 +1231,17 @@
     "KVI_COUNTER_SHOWWHILEPRESSING": "Show Counter While Pressing",
     "KVI_DISPLAY_PRESSED": "Label While Pressed (empty = same)",
     "KVI_LABEL_ENABLED": "Show Label",
-    "TOGGLE_BIND_HINT": "Right-click any toggle to give it its own hotkey. Press Esc while binding to unbind it."
+    "TOGGLE_BIND_HINT": "Right-click any toggle to give it its own hotkey. Press Esc while binding to unbind it.",
+    "HELP": "Help",
+    "FAQ": "FAQ",
+    "FAQ_HINT": "These questions live in FAQ.json in your Quartz folder. Edit that file to reword an answer, add your own questions or drop the ones you don't need, then press Reload. Delete the file and reload to get the defaults back.",
+    "FAQ_OPEN_FILE": "Open File",
+    "DESC_FAQ_OPEN_FILE": "Opens FAQ.json in whatever your system uses for .json files, writing the default file first if it isn't there yet.",
+    "FAQ_OPEN_FOLDER": "Open Folder",
+    "DESC_FAQ_OPEN_FOLDER": "Opens the Quartz data folder that holds FAQ.json and your settings.",
+    "FAQ_RELOAD": "Reload",
+    "DESC_FAQ_RELOAD": "Re-reads FAQ.json from disk and rebuilds the list below.",
+    "FAQ_ERROR": "FAQ.json couldn't be read, showing the built-in questions instead — {0}",
+    "FAQ_EMPTY": "FAQ.json has no questions in it yet."
   }
 }
