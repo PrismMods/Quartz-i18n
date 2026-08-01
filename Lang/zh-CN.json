@@ -515,5 +515,7 @@
     "UPDATE_UP_TO_DATE": "当前已是最新版本。",
     "VISUALS": "视觉效果",
     "WINDOW_OPACITY": "设置窗口透明度"
+    "DESC_TW_NOPAUSE": "旧版自动播放逻辑",
+    "TW_NOPAUSE": "旧版自动播放"
   }
 }
