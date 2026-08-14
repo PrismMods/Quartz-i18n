@@ -5,11 +5,11 @@ const CONFIG = {
   branch: "main",
 
   // Client ID of your GitHub OAuth App (public, safe to embed).
-  clientId: "YOUR_OAUTH_CLIENT_ID",
+  clientId: "Ov23liBao36hDxtZMxHN",
 
   // URL of the Cloudflare Worker that exchanges the code for a token
   // (see worker.js). Keeps the client secret out of the browser.
-  tokenExchangeUrl: "https://your-worker.your-subdomain.workers.dev/exchange",
+  tokenExchangeUrl: "https://quartz-i18n-oauth.quartzi18n.workers.dev/exchange",
 
   // Reference language — the left (read-only) source column.
   referenceLang: "en-US",
