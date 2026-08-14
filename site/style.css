@@ -106,6 +106,52 @@ select {
 
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
+.btn.big {
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+#authBtn {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-color: var(--accent);
+}
+
+#authBtn:hover:not(:disabled) { opacity: 0.9; }
+
+.welcome {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 24px;
+  gap: 12px;
+}
+
+.welcome h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.welcome .muted {
+  max-width: 420px;
+  margin: 0;
+}
+
+.welcome .small {
+  font-size: 12px;
+}
+
+.welcome .btn {
+  margin-top: 8px;
+}
+
 .muted { color: var(--muted); }
 
 #tabs {
