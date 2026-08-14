@@ -1,35 +1,44 @@
-# quartz-i18n
+# quartz-i18n web editor
 
-Community translations for [Quartz](https://github.com/PrismMods/Quartz), an A Dance of Fire and Ice mod.
+A static GitHub Pages site for translating [quartz-i18n](..) without cloning the
+repo. Translators sign in with GitHub, see a side-by-side view (English source on
+the left, their translation on the right), and commit changes directly.
 
-## Layout
+## How it works
 
-- `Lang/en-US.json` — English, the **source of truth** for keys. Auto-pushed here from the
-  Quartz repo whenever it changes. **Do not edit** — changes are overwritten.
-- `Lang/<code>.json` — one file per language (`ko-KR.json`, `zh-CN.json`, …). Edit these.
+- **GitHub Pages** serves everything (`site/` folder) — no server.
+- **GitHub OAuth App** authenticates translators; the site checks
+  `permissions.push` to enforce write access.
+- **Cloudflare Worker** (`worker.js`) exchanges the OAuth `code` for an access
+  token using the client secret, which is never shipped to the browser.
+- Edits run through the GitHub Contents API (`PUT` on the target language file),
+  which triggers the existing `validate.yml` and `manifest.yml` workflows.
 
-## How to translate
+## Setup
 
-1. Open `Lang/en-US.json` to see every key and its English text.
-2. Edit (or create) `Lang/<your-code>.json`, shaped like this:
-   ```json
-   {
-     "<your-code>": {
-       "0KTL": "DO_NOT_TRANSLATE_THIS_KEY!",
-       "0NATIVELANG": "<language's own name>",
-       "SOME_KEY": "your translation",
-       "...": "..."
-     }
-   }
+1. **Create a GitHub OAuth App** (Settings → Developer settings → OAuth Apps):
+   - Homepage URL: your Pages URL.
+   - Authorization callback URL: `https://<pages-domain>/callback.html`.
+   - Note the **Client ID** and generate a **Client Secret**.
+
+2. **Deploy the worker** (`worker.js`) with Cloudflare Workers, then set its
+   secrets:
    ```
-3. Rules:
-   - Keep `0KTL` **exactly** `DO_NOT_TRANSLATE_THIS_KEY!`. Without it the mod ignores the whole file.
-   - Set `0NATIVELANG` to the language's own name (shown in the in-game picker), e.g. `中文`, `한국어`.
-   - Translate **values only, never keys**. Match the key set in `en-US.json`.
-   - A few values are intentionally English (BPM, FPS, KPS, R/G/B/A channels, brand names). Leaving those as-is is correct.
-4. Open a pull request. CI (`scripts/validate.py`) checks JSON validity, the `0KTL` sentinel, and key parity against `en-US.json`. Missing keys are a warning (they fall back to English), not a failure — partial translations are fine.
-5. After it's merged here, a bot opens a pull request on the Quartz repo to pull your changes into the mod. A maintainer reviews and merges that.
+   wrangler secret put GITHUB_CLIENT_ID
+   wrangler secret put GITHUB_CLIENT_SECRET
+   ```
 
-## Adding a new language
+3. **Edit `app.js`** `CONFIG` block: set `clientId` and `tokenExchangeUrl`,
+   and confirm `owner`/`repo`/`branch`.
 
-Copy `Lang/en-US.json` to `Lang/<code>.json`, change the top-level block key and `0NATIVELANG`, then translate. No code change is needed in the mod — Quartz auto-registers any valid language file it finds.
+4. **Enable Pages** once: repo Settings → Pages → Source = "Deploy from a branch"
+   → branch `gh-pages` / `/ (root)`. The `pages.yml` workflow then auto-publishes
+   `site/` to that branch on every change to `site/**` — no manual deploys.
+
+## Notes
+
+- Access tokens are held in `sessionStorage` only; closing the tab signs out.
+- The reference column is `en-US.json` (read-only). The `0KTL` sentinel key is
+  locked from editing.
+- Partial translations are valid; missing keys fall back to English per the repo
+  rules.
