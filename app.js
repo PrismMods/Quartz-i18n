@@ -118,13 +118,17 @@ function setUser(login) {
 }
 
 // ===== Init =====
-async function init() {
-  const token = sessionStorage.getItem("gh-token");
+function bindAuthButton() {
   $("#authBtn").addEventListener("click", () => {
     if (sessionStorage.getItem("gh-token")) signOut();
     else signIn();
   });
   $("#welcomeBtn").addEventListener("click", signIn);
+}
+
+async function init() {
+  bindAuthButton();
+  const token = sessionStorage.getItem("gh-token");
 
   if (token) {
     const user = await whoami();
