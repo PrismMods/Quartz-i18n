@@ -1,0 +1,34 @@
+site/style.css
+  s_ea776fc6336a61::t_36b4e8b13bf368 1-216
+site/index.html
+  s_ea776fc6336a61::t_9f24ff7dc3dde2 1-47
+site/README.md
+  s_ea776fc6336a61::t_9908e087ec0ca0 1-33,37-44
+  s_ea776fc6336a61::t_d01c3791394f39 34-36
+site/wrangler.toml
+  s_ea776fc6336a61::t_505fae0bc1f3ce 1-12
+site/callback.html
+  s_ea776fc6336a61::t_907952f91f28f1 1-53
+.github/workflows/pages.yml
+  s_ea776fc6336a61::t_12227e6c2cecf0 1-40
+site/app.js
+  s_ea776fc6336a61::t_5b4901c2a9b736 1-397
+site/worker.js
+  s_ea776fc6336a61::t_1a9ddc7a76e91c 1-56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "5fd5f893ef105d4f78fb1186fbdb1be58c075998",
+  "prompts": {},
+  "sessions": {
+    "s_ea776fc6336a61": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0019ce6ecffenOmI3tvTEsaK9Q",
+        "model": "google/gemini-3.7-flash"
+      },
+      "human_author": "koren <131921956+kkorenn@users.noreply.github.com>"
+    }
+  }
+}
