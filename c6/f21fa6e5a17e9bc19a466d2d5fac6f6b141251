@@ -1,0 +1,24 @@
+site/app.js
+  s_ea776fc6336a61::t_5dce4ac9beb49a 356-362,365-367,371,373,375,410-416
+  s_ea776fc6336a61::t_312497063abaed 205-206,215
+  s_ea776fc6336a61::t_b8e2b194e7b7e5 146
+site/style.css
+  s_ea776fc6336a61::t_a2d962d01ffedc 139
+  s_ea776fc6336a61::t_860a30c836e179 107-114
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "c6f21fa6e5a17e9bc19a466d2d5fac6f6b141251",
+  "prompts": {},
+  "sessions": {
+    "s_ea776fc6336a61": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0019ce6ecffenOmI3tvTEsaK9Q",
+        "model": "google/gemini-3.7-flash"
+      },
+      "human_author": "koren <131921956+kkorenn@users.noreply.github.com>"
+    }
+  }
+}
