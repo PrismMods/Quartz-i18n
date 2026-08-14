@@ -334,15 +334,19 @@ async function save() {
   try {
     $("#saveBtn").disabled = true;
     $("#status").textContent = "Committing…";
+
+    // Re-fetch the latest SHA immediately before writing. The file can change
+    // under us (another translator, or the manifest bot touching the tree), and
+    // the Contents API requires the exact current blob SHA to overwrite it.
+    const latest = await getFile(target.path);
+    target.sha = latest.sha;
+
     await commitFile(target.path, json, target.sha, msg);
-    target.sha = undefined; // will refresh on next load
     dirty = {};
     addedKeys = new Set();
     $("#status").textContent = "Committed ✓";
     setUser(window._login || $("#user").textContent);
-    // Re-fetch sha for subsequent edits
-    const f = await getFile(target.path);
-    target.sha = f.sha;
+    target.sha = latest.sha;
   } catch (e) {
     $("#status").textContent = "Error: " + e.message;
     $("#saveBtn").disabled = false;
