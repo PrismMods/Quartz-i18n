@@ -1,0 +1,19 @@
+site/app.js
+  s_ea776fc6336a61::t_a0269d2e81629a 8,12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "c135185ce13251ced70539da547fcfa20e7fe8b0",
+  "prompts": {},
+  "sessions": {
+    "s_ea776fc6336a61": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0019ce6ecffenOmI3tvTEsaK9Q",
+        "model": "google/gemini-3.7-flash"
+      },
+      "human_author": "koren <131921956+kkorenn@users.noreply.github.com>"
+    }
+  }
+}
