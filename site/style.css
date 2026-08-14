@@ -104,6 +104,14 @@ select {
 
 .btn.ghost { background: transparent; }
 
+.btn.active {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-color: var(--accent);
+}
+
+.btn.active:hover:not(:disabled) { opacity: 0.9; }
+
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .btn.big {
@@ -128,7 +136,7 @@ select {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 40px 24px;
+  padding: 64px 24px;
   gap: 12px;
 }
 

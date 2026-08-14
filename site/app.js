@@ -143,6 +143,7 @@ async function init() {
     }
   } else {
     $("#authBtn").textContent = "Sign in";
+    $("#welcome").hidden = false;
   }
 }
 
@@ -201,6 +202,8 @@ async function selectLanguage(file) {
 
   dirty = {};
   addedKeys = new Set();
+  missingMode = false;
+  toggleBtn($("#newLangsBtn"), false);
   render();
 }
 
@@ -209,7 +212,7 @@ function render() {
   const list = $("#list");
   list.innerHTML = "";
 
-  const showSrc = $("#sourceBtn").textContent === "Hide English";
+  const showSrc = $("#sourceBtn").classList.contains("active");
 
   const frag = document.createDocumentFragment();
   keys.forEach((key) => {
@@ -350,19 +353,28 @@ async function save() {
 $("#langSelect").addEventListener("change", (e) => selectLanguage(e.target.value));
 $("#saveBtn").addEventListener("click", save);
 
+let missingMode = false;
+
+function toggleBtn(el, active) {
+  el.classList.toggle("active", active);
+  el.setAttribute("aria-pressed", String(active));
+}
+
 $("#sourceBtn").addEventListener("click", (e) => {
   const showing = e.target.textContent === "Hide English";
-  e.target.textContent = showing ? "Show English" : "Hide English";
+  const next = !showing;
+  e.target.textContent = next ? "Hide English" : "Show English";
+  toggleBtn(e.target, next);
   render();
 });
 
-$("#newLangsBtn").addEventListener("click", () => {
+function renderMissing() {
   const missing = Object.keys(en).filter((k) => target.data[k] === undefined);
+  const list = $("#list");
   if (!missing.length) {
-    alert("No missing keys — translation is up to date.");
+    list.innerHTML = `<div class="empty muted">No missing keys — translation is up to date.</div>`;
     return;
   }
-  const list = $("#list");
   list.innerHTML = "";
   missing.forEach((key) => {
     const row = document.createElement("div");
@@ -395,6 +407,13 @@ $("#newLangsBtn").addEventListener("click", () => {
     row.appendChild(tgtCol);
   });
   updateStatus();
+}
+
+$("#newLangsBtn").addEventListener("click", (e) => {
+  missingMode = !missingMode;
+  toggleBtn(e.target, missingMode);
+  if (missingMode) renderMissing();
+  else render();
 });
 
 init();
