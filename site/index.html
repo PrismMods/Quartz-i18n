@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quartz i18n</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header id="appbar">
+    <div class="brand">quartz-i18n</div>
+    <div class="bar-right">
+      <span id="user" class="muted"></span>
+      <span id="access" class="muted"></span>
+      <button id="authBtn" class="btn">Sign in</button>
+    </div>
+  </header>
+
+  <main id="app" hidden>
+    <nav id="tabs" class="row"></nav>
+
+    <section id="controls" class="row">
+      <label class="sel">
+        <span>Target</span>
+        <select id="langSelect"></select>
+      </label>
+      <div id="status" class="muted"></div>
+      <div class="spacer"></div>
+      <button id="sourceBtn" class="btn ghost">Show English</button>
+      <button id="newLangsBtn" class="btn ghost">Missing keys</button>
+      <button id="saveBtn" class="btn primary" disabled>Commit</button>
+    </section>
+
+    <div id="rowHead" class="headrow row muted">
+      <div class="col key">Key</div>
+      <div class="col">English</div>
+      <div class="col">Translation</div>
+    </div>
+
+    <section id="list"></section>
+  </main>
+
+  <footer class="muted">Signed in via GitHub. Changes are committed directly to the repository.</footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

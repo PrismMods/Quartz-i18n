@@ -1,0 +1,12 @@
+# Cloudflare Worker for the quartz-i18n OAuth token exchange.
+#
+# Deploy from the site/ directory:
+#   cd site
+#   wrangler deploy
+#
+# Set secrets (never hardcode them here):
+#   wrangler secret put GITHUB_CLIENT_ID
+#   wrangler secret put GITHUB_CLIENT_SECRET
+name = "quartz-i18n-oauth"
+main = "worker.js"
+compatibility_date = "2024-11-01"

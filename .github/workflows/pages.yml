@@ -1,0 +1,40 @@
+# Deploy the static translation editor in site/ to GitHub Pages.
+#
+# Matches the existing workflow style (minimal, no extra deps). The Pages
+# source must be set once in repo Settings → Pages → "Deploy from a branch" →
+# branch "gh-pages" / root. This workflow rebuilds and force-pushes that branch
+# whenever site/ changes, so it is fully hands-off after the one-time setting.
+name: pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy site/ to gh-pages
+        run: |
+          set -e
+          git fetch origin gh-pages:gh-pages --quiet || true
+          git worktree add /tmp/pages gh-pages 2>/dev/null || git worktree add -b gh-pages /tmp/pages origin/main
+          rm -rf /tmp/pages/*
+          cp -r site/* /tmp/pages/
+          cd /tmp/pages
+          git add -A
+          if git diff --cached --quiet; then
+            echo "no changes"
+            exit 0
+          fi
+          git -c user.name="quartz-i18n-bot" \
+              -c user.email="i18n-bot@users.noreply.github.com" \
+              commit -m "deploy: publish site/ from ${GITHUB_SHA}"
+          git push origin gh-pages

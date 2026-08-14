@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Authorizing…</title>
+</head>
+<body>
+  <p id="msg">Authorizing…</p>
+  <script>
+    (async function () {
+      const el = document.getElementById("msg");
+      const q = new URLSearchParams(location.search);
+      const code = q.get("code");
+      const state = q.get("state");
+      const expected = sessionStorage.getItem("oauth-state");
+      const worker = localStorage.getItem("oauth-worker-url");
+
+      function done(text) {
+        el.textContent = text;
+        setTimeout(() => window.location.replace("./"), 400);
+      }
+
+      if (!code) {
+        done(window.opener ? "closed" : "No code returned.");
+        return;
+      }
+      if (state !== expected) {
+        done("State mismatch — possible CSRF. Aborting.");
+        return;
+      }
+      if (!worker) {
+        done("No token-exchange worker configured.");
+        return;
+      }
+
+      try {
+        const res = await fetch(worker + "?code=" + encodeURIComponent(code) +
+          "&state=" + encodeURIComponent(state));
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const data = await res.json();
+        if (data.access_token) {
+          sessionStorage.setItem("gh-token", data.access_token);
+          done("Signed in.");
+        } else {
+          done("Token exchange failed.");
+        }
+      } catch (e) {
+        done("Error: " + e.message);
+      }
+    })();
+  </script>
+</body>
+</html>
