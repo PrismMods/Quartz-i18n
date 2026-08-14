@@ -124,6 +124,7 @@ async function init() {
     if (sessionStorage.getItem("gh-token")) signOut();
     else signIn();
   });
+  $("#welcomeBtn").addEventListener("click", signIn);
 
   if (token) {
     const user = await whoami();
@@ -152,6 +153,7 @@ function signOut() {
   $("#access").textContent = "";
   $("#authBtn").textContent = "Sign in";
   $("#app").hidden = true;
+  $("#welcome").hidden = false;
 }
 
 async function loadEditor() {
@@ -177,6 +179,7 @@ async function loadEditor() {
     });
 
     $("#app").hidden = false;
+    $("#welcome").hidden = true;
     await selectLanguage(sel.value);
   } catch (e) {
     alert("Failed to load: " + e.message);
