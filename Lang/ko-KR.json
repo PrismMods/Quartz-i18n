@@ -2,9 +2,7 @@
   "ko-KR": {
     "0KTL": "DO_NOT_TRANSLATE_THIS_KEY!",
     "0NATIVELANG": "한국어",
-    "0TRANSLATORS": [
-      "OVERLAYER"
-    ],
+    "0TRANSLATORS": "test",
     "ACCENT_COLOR": "강조 색상",
     "ADDONS": "애드온",
     "ADDONS_ADD": "애드온 추가",
