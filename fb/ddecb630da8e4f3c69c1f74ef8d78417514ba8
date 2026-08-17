@@ -1,0 +1,22 @@
+README.md
+  s_ca5121ce93cbd0::t_ed5480862aca27 10-11
+  s_ca5121ce93cbd0::t_4292f2668e91d8 35-61
+.github/workflows/validate.yml
+  s_ca5121ce93cbd0::t_1e07aca983c623 17-21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "fbddecb630da8e4f3c69c1f74ef8d78417514ba8",
+  "prompts": {},
+  "sessions": {
+    "s_ca5121ce93cbd0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8be10205-8578-499e-b070-dd4ae2be95b9",
+        "model": "claude-opus-5"
+      },
+      "human_author": "koren <131921956+kkorenn@users.noreply.github.com>"
+    }
+  }
+}
