@@ -16,6 +16,34 @@ const CONFIG = {
 
   // Keys that must NOT be edited by translators (repo rules).
   protectedKeys: ["0KTL"],
+
+  // Each namespace is a directory of one-file-per-language, with its OWN
+  // reference. They deliberately share key names: the April Fools overlay holds
+  // the same keys as the normal translation with joke values, which is exactly
+  // why it lives in its own folder and gets its own reference here. Never point
+  // two namespaces at one directory.
+  namespaces: [
+    {
+      id: "main",
+      label: "Translation",
+      dir: "Lang",
+    },
+    {
+      id: "april",
+      label: "April Fools",
+      dir: "Lang/AprilFools",
+      // Shown above the rows. This is the one instruction translators most need
+      // and least expect, so it belongs in the editor and not only in the README.
+      hint:
+        "Joke strings, shown in-game on one day of the year. Optional — anything you leave alone " +
+        "falls back to the English joke, then to your normal translation. Do not translate the " +
+        "English literally; write a joke that lands in your language for the same UI element, at " +
+        "roughly the same length.",
+      // The files start as copies of the real translation, so "still identical to
+      // the normal translation" is the real to-do list here — not "missing".
+      comparesAgainst: "Lang",
+    },
+  ],
 };
 
 // ===== GitHub API client =====
@@ -105,10 +133,14 @@ async function whoami() {
 }
 
 // ===== State =====
-let en = {}; // reference block (values)
+let en = {}; // reference block of the ACTIVE namespace (values)
 let target = {}; // { langCode, data, sha, path }
 let dirty = {}; // key -> new value (only changed keys)
 let addedKeys = new Set(); // keys added that don't exist in original target
+let namespaces = []; // the CONFIG namespaces that actually exist in the repo
+let ns = null; // active namespace
+let baseline = {}; // for a comparing namespace: the file it is measured against
+const refCache = {}; // namespace id -> reference block, so switching tabs is free
 
 // ===== DOM helpers =====
 const $ = (s) => document.querySelector(s);
@@ -161,54 +193,152 @@ function signOut() {
   $("#welcome").hidden = false;
 }
 
+// List the *.json language files in a namespace directory. A namespace whose
+// directory does not exist yet is not an error — it just does not get a tab.
+async function listLanguages(dir) {
+  try {
+    const entries = await api(
+      `/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${dir}`
+    );
+    return entries
+      .filter((e) => e.type === "file" && e.name.endsWith(".json"))
+      .map((e) => e.name)
+      .sort();
+  } catch (_) {
+    return [];
+  }
+}
+
+async function referenceFor(space) {
+  if (refCache[space.id]) return refCache[space.id];
+  let block = await loadJson(`${space.dir}/${CONFIG.referenceLang}.json`);
+  if (block[CONFIG.referenceLang]) block = block[CONFIG.referenceLang];
+  refCache[space.id] = block;
+  return block;
+}
+
 async function loadEditor() {
   try {
-    en = await loadJson(`Lang/${CONFIG.referenceLang}.json`);
-    if (en[CONFIG.referenceLang]) en = en[CONFIG.referenceLang];
+    const found = [];
+    for (const space of CONFIG.namespaces) {
+      const files = await listLanguages(space.dir);
+      // A namespace is only usable if it has its reference AND something to edit.
+      if (!files.includes(`${CONFIG.referenceLang}.json`)) continue;
+      if (files.length < 2) continue;
+      found.push({ ...space, files });
+    }
+    if (!found.length) throw new Error(`no language files under Lang/`);
+    namespaces = found;
 
-    const langs = await api(
-      `/repos/${CONFIG.owner}/${CONFIG.repo}/contents/Lang`
-    );
-    const files = langs
-      .map((l) => l.name)
-      .filter((n) => n.endsWith(".json") && n !== `${CONFIG.referenceLang}.json`)
-      .sort();
+    renderTabs();
+    $("#app").hidden = false;
+    $("#welcome").hidden = true;
+    await selectNamespace(namespaces[0].id);
+  } catch (e) {
+    alert("Failed to load: " + e.message);
+  }
+}
 
-    const sel = $("#langSelect");
-    sel.innerHTML = "";
-    files.forEach((f) => {
+// ===== Namespace selection =====
+function renderTabs() {
+  const tabs = $("#tabs");
+  tabs.innerHTML = "";
+  // One namespace is the normal case — a lone tab is just noise.
+  if (namespaces.length < 2) return;
+  namespaces.forEach((space) => {
+    const tab = document.createElement("button");
+    tab.className = "tab";
+    tab.type = "button";
+    tab.textContent = space.label;
+    tab.dataset.ns = space.id;
+    tab.addEventListener("click", () => selectNamespace(space.id));
+    tabs.appendChild(tab);
+  });
+}
+
+function markActiveTab() {
+  $("#tabs")
+    .querySelectorAll(".tab")
+    .forEach((t) => t.classList.toggle("active", t.dataset.ns === ns.id));
+}
+
+async function selectNamespace(id) {
+  const next = namespaces.find((s) => s.id === id);
+  if (!next) return;
+  // Switching namespace throws away edits, so do not do it silently.
+  if (ns && ns.id !== id && Object.keys(dirty).length) {
+    const n = Object.keys(dirty).length;
+    if (!confirm(`Discard ${n} uncommitted change${n > 1 ? "s" : ""} and switch to ${next.label}?`))
+      return markActiveTab();
+  }
+  ns = next;
+  markActiveTab();
+
+  const hint = $("#nsHint");
+  hint.textContent = ns.hint || "";
+  hint.hidden = !ns.hint;
+  $("#newLangsBtn").textContent = ns.comparesAgainst ? "Not written yet" : "Missing keys";
+
+  en = await referenceFor(ns);
+
+  const sel = $("#langSelect");
+  sel.innerHTML = "";
+  ns.files
+    .filter((f) => f !== `${CONFIG.referenceLang}.json`)
+    .forEach((f) => {
       const opt = document.createElement("option");
       opt.value = f;
       opt.textContent = f.replace(/\.json$/, "");
       sel.appendChild(opt);
     });
 
-    $("#app").hidden = false;
-    $("#welcome").hidden = true;
-    await selectLanguage(sel.value);
-  } catch (e) {
-    alert("Failed to load: " + e.message);
-  }
+  await selectLanguage(sel.value);
 }
 
 // ===== Language selection =====
 async function selectLanguage(file) {
   if (!file) return;
   const langCode = file.replace(/\.json$/, "");
-  const raw = await loadJson(`Lang/${file}`);
+  const path = `${ns.dir}/${file}`;
+  const raw = await loadJson(path);
   const block = raw[langCode];
   target = {
     langCode,
-    path: `Lang/${file}`,
+    path,
     data: block || {},
-    sha: (await getFile(`Lang/${file}`)).sha,
+    sha: (await getFile(path)).sha,
   };
+
+  // For the overlay, the files start life as copies of the real translation, so
+  // "still identical to that" is what un-written means — nothing is ever missing.
+  baseline = {};
+  if (ns.comparesAgainst) {
+    try {
+      const other = await loadJson(`${ns.comparesAgainst}/${file}`);
+      baseline = other[langCode] || {};
+    } catch (_) {
+      baseline = {};
+    }
+  }
 
   dirty = {};
   addedKeys = new Set();
   missingMode = false;
   toggleBtn($("#newLangsBtn"), false);
   render();
+}
+
+// A key the translator has not actually done anything with yet.
+function isUnwritten(key) {
+  if (CONFIG.protectedKeys.includes(key)) return false;
+  if (ns.comparesAgainst) {
+    // The mod's overlay loader drops every 0-prefixed metadata key (0KTL,
+    // 0NATIVELANG, 0TRANSLATORS), so a joke written there would never show.
+    // Flagging them as to-do would send translators after inert rows.
+    if (key.startsWith("0")) return false;
+    return baseline[key] !== undefined && target.data[key] === baseline[key];
+  }
+  return target.data[key] === undefined;
 }
 
 function render() {
@@ -224,11 +354,12 @@ function render() {
     frag.appendChild(buildRow(key, showSrc));
   });
 
-  // Added/missing keys not yet in target
-  const missing = keys.filter((k) => target.data[k] === undefined);
-  const missingRow = buildMissingRow(missing.length);
   list.appendChild(frag);
-  if (missing.length) list.appendChild(missingRow);
+
+  // In the overlay nothing is ever missing — the files ship as full copies — so
+  // the tail row counts what is still untouched instead.
+  const pending = keys.filter(isUnwritten).length;
+  if (pending) list.appendChild(buildPendingRow(pending));
 
   updateStatus();
 }
@@ -239,8 +370,17 @@ function buildRow(key, showSrc) {
 
   const keyCol = document.createElement("div");
   keyCol.className = "col key";
-  keyCol.textContent = key;
-  if (CONFIG.protectedKeys.includes(key)) keyCol.textContent += " 🔒";
+  const keyName = document.createElement("span");
+  keyName.className = "kname";
+  keyName.textContent = key;
+  if (CONFIG.protectedKeys.includes(key)) keyName.textContent += " 🔒";
+  keyCol.appendChild(keyName);
+  if (isUnwritten(key)) {
+    const badge = document.createElement("span");
+    badge.className = "task-badge untouched";
+    badge.textContent = ns.comparesAgainst ? "no joke yet" : "untranslated";
+    keyCol.appendChild(badge);
+  }
   row.appendChild(keyCol);
 
   const srcCol = document.createElement("div");
@@ -277,25 +417,26 @@ function buildRow(key, showSrc) {
   return row;
 }
 
-function buildMissingRow(count) {
+function buildPendingRow(count) {
   const row = document.createElement("div");
   row.className = "row-item";
 
   const keyCol = document.createElement("div");
   keyCol.className = "col key";
-  keyCol.textContent = "Missing keys";
+  keyCol.textContent = ns.comparesAgainst ? "Not written yet" : "Missing keys";
   row.appendChild(keyCol);
 
   const srcCol = document.createElement("div");
   srcCol.className = "col";
   const btn = document.createElement("button");
   btn.className = "btn";
-  btn.textContent = `Add ${count} missing key${count > 1 ? "s" : ""}`;
+  btn.textContent = ns.comparesAgainst
+    ? `Show ${count} key${count > 1 ? "s" : ""} with no joke yet`
+    : `Show ${count} missing key${count > 1 ? "s" : ""}`;
   btn.addEventListener("click", () => {
-    const textarea = document.createElement("textarea");
-    textarea.placeholder = "Type translations here…";
-    btn.replaceWith(textarea);
-    textarea.focus();
+    missingMode = true;
+    toggleBtn($("#newLangsBtn"), true);
+    renderMissing();
   });
   srcCol.appendChild(btn);
   row.appendChild(srcCol);
@@ -333,7 +474,10 @@ async function save() {
   });
 
   const json = JSON.stringify(ordered, null, 2) + "\n";
-  const msg = `Update ${target.langCode} translations via web editor`;
+  // Name the namespace: the overlay and the normal file have the same basename,
+  // so without it the two are indistinguishable in the log and in the sync PR.
+  const what = ns.id === "main" ? "translations" : `${ns.label} strings`;
+  const msg = `Update ${target.langCode} ${what} via web editor`;
 
   try {
     $("#saveBtn").disabled = true;
@@ -377,14 +521,16 @@ $("#sourceBtn").addEventListener("click", (e) => {
 });
 
 function renderMissing() {
-  const missing = Object.keys(en).filter((k) => target.data[k] === undefined);
+  const pending = Object.keys(en).sort().filter(isUnwritten);
   const list = $("#list");
-  if (!missing.length) {
-    list.innerHTML = `<div class="empty muted">No missing keys — translation is up to date.</div>`;
+  if (!pending.length) {
+    list.innerHTML = ns.comparesAgainst
+      ? `<div class="empty muted">Every key has a joke of its own — nothing left here.</div>`
+      : `<div class="empty muted">No missing keys — translation is up to date.</div>`;
     return;
   }
   list.innerHTML = "";
-  missing.forEach((key) => {
+  pending.forEach((key) => {
     const row = document.createElement("div");
     row.className = "row-item";
 
@@ -404,15 +550,26 @@ function renderMissing() {
     const tgtCol = document.createElement("div");
     tgtCol.className = "col";
     const ta = document.createElement("textarea");
-    ta.value = "";
-    ta.placeholder = "Translation…";
+    // In the overlay the value already exists (it is the real translation, copied)
+    // so it is seeded for rewriting rather than left blank to fill in.
+    const original = target.data[key] ?? "";
+    ta.value = ns.comparesAgainst ? original : "";
+    ta.placeholder = ns.comparesAgainst ? "" : "Translation…";
     ta.addEventListener("input", () => {
-      if (ta.value === "") delete dirty[key];
-      else dirty[key] = ta.value;
+      if (ta.value === original) {
+        delete dirty[key];
+        ta.classList.remove("dirty");
+      } else {
+        dirty[key] = ta.value;
+        ta.classList.add("dirty");
+      }
       updateStatus();
     });
     tgtCol.appendChild(ta);
     row.appendChild(tgtCol);
+    // Was missing entirely: every row was built and then dropped on the floor, so
+    // this view only ever rendered its own "nothing to do" message.
+    list.appendChild(row);
   });
   updateStatus();
 }

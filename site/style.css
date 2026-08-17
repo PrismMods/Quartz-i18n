@@ -11,6 +11,11 @@
 
 * { box-sizing: border-box; }
 
+/* .welcome and #app set their own display, which outranks the UA's
+   [hidden] { display: none } — so the sign-in panel stayed on screen underneath
+   the editor for every signed-in user. Hidden must win over layout. */
+[hidden] { display: none !important; }
+
 html, body {
   margin: 0;
   height: 100%;
@@ -200,6 +205,28 @@ select {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* The key cell is a fixed 220px with nowrap + overflow:hidden, so a status badge
+   appended beside a long key would simply be clipped away. Stack instead, and
+   keep the ellipsis on the name itself rather than on the cell. */
+.col.key:has(.task-badge) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+}
+
+.col.key .kname {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#nsHint {
+  margin: 12px 0 0;
+  max-width: 70ch;
+  font-size: 12px;
 }
 
 .row-item {
