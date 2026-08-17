@@ -4,6 +4,10 @@
 # source must be set once in repo Settings → Pages → "Deploy from a branch" →
 # branch "gh-pages" / root. This workflow rebuilds and force-pushes that branch
 # whenever site/ changes, so it is fully hands-off after the one-time setting.
+#
+# The repo-root CNAME is published to gh-pages as well, which is what tells Pages
+# the custom domain. DNS still has to point at GitHub separately: i18n.quartzz.xyz
+# needs a CNAME record to prismmods.github.io.
 name: pages
 
 on:
@@ -11,6 +15,8 @@ on:
     branches: [main]
     paths:
       - "site/**"
+      # CNAME is published too (see below), so a domain change must redeploy.
+      - "CNAME"
   workflow_dispatch:
 
 permissions:
@@ -28,6 +34,16 @@ jobs:
           git worktree add /tmp/pages gh-pages 2>/dev/null || git worktree add -b gh-pages /tmp/pages origin/main
           rm -rf /tmp/pages/*
           cp -r site/* /tmp/pages/
+          # GitHub Pages reads the custom domain from a CNAME file on the PUBLISHED
+          # branch, and this one lives at the repo root rather than in site/ — so it
+          # never got copied and i18n.quartzz.xyz served "Site not found" while the
+          # site itself was fine at prismmods.github.io/Quartz-i18n/. Publish it.
+          # Deliberately not `[ -f CNAME ] && cp ...`: under `set -e` a missing file
+          # would make the whole step exit non-zero.
+          if [ -f CNAME ]; then
+            cp CNAME /tmp/pages/
+            echo "published custom domain: $(cat CNAME)"
+          fi
           cd /tmp/pages
           git add -A
           if git diff --cached --quiet; then
