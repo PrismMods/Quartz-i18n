@@ -14,3 +14,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 scripts/validate.py Lang Lang/en-US.json
+      # The April Fools overlay is a separate namespace with its own reference: it
+      # reuses the same keys with different values, so it is measured against its
+      # own en-US, not the one above. Without this a broken overlay file passes CI
+      # and only shows up as a warning in the game's log.
+      - run: python3 scripts/validate.py Lang/AprilFools Lang/AprilFools/en-US.json
