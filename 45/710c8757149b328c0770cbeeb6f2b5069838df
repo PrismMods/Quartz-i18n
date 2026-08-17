@@ -1,0 +1,36 @@
+site/index.html
+  s_ca5121ce93cbd0::t_da512e44d46648 28
+site/app.js
+  s_ca5121ce93cbd0::t_c3453d6c14b67f 19-46
+  s_ca5121ce93cbd0::t_987c6acaabffe5 196-198,200-201,203-205,207-210,212-231,233,236,242-297,302-303,307,309,312-323,331-334,339-342
+  s_ca5121ce93cbd0::t_e33ef5f2eb2672 335-338
+  s_ca5121ce93cbd0::t_1ae7024ed271f8 477-480
+  s_ca5121ce93cbd0::t_ba9a36efc3d1c8 358-362
+  s_ca5121ce93cbd0::t_25a89f29a97734 524,526-529,533
+  s_ca5121ce93cbd0::t_abd1cff4511d65 553-557,559-565
+  s_ca5121ce93cbd0::t_a38b38bcf3618e 570-572
+  s_ca5121ce93cbd0::t_5fa64cb2a79e07 136,140-143
+  s_ca5121ce93cbd0::t_a46318b4cbf84e 373-377
+  s_ca5121ce93cbd0::t_4982501186c3e8 378-383
+  s_ca5121ce93cbd0::t_47e90dfa2415d3 420,426,433-435,437-439
+  s_ca5121ce93cbd0::t_49a2a34e0377d4 343
+site/style.css
+  s_ca5121ce93cbd0::t_43914f8403da95 14-18
+  s_ca5121ce93cbd0::t_69a5ff80464eee 210-231
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "45710c8757149b328c0770cbeeb6f2b5069838df",
+  "prompts": {},
+  "sessions": {
+    "s_ca5121ce93cbd0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8be10205-8578-499e-b070-dd4ae2be95b9",
+        "model": "unknown"
+      },
+      "human_author": "koren <131921956+kkorenn@users.noreply.github.com>"
+    }
+  }
+}
