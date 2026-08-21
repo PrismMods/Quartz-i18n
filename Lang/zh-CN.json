@@ -552,7 +552,7 @@
     "UPDATE_SKIP": "跳过此版本",
     "UPDATE_SKIPPED": "已屏蔽版本{0}，后续新版本仍会推送。",
     "UPDATE_TOAST_HINT": "点击打开设置界面",
-    "UPDATE_UNDO": "撤销跳过",
+    "UPDATE_UNDO": "撤销",
     "UPDATE_UP_TO_DATE": "当前已是最新版本。",
     "VISUALS": "视觉效果",
     "WINDOW_OPACITY": "设置窗口透明度",
