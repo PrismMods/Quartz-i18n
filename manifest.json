@@ -1,8 +1,8 @@
 {
   "files": {
-    "en-US.json": "7dda0239f5fd03ad7285b3296276a313840834a9755b6da0e06f0cf45a9002bf",
-    "ko-KR.json": "c5f7f650874677eb5e043d8ed6008079917a1b5cb2b6bf3dffc9aaa9255f31b2",
-    "zh-CN.json": "1df0c5155a1109703c3245e6e2a7537fffe6be06f6b5509bd39e284e69f330d2"
+    "en-US.json": "00f505ce0da9500dbdd47208038cec1c0d6dd828639930ebd297012b62cc0a5f",
+    "ko-KR.json": "f7c60279a1147b2fe802cb8bbaba9ef90cab5952420c069b516efde246589f94",
+    "zh-CN.json": "9a0711dbac47e8ffae557bf8f0a7ef079bc3e8824ca4693c328f3f8578bf52f4"
   },
   "version": 1
 }
