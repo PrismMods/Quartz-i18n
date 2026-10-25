@@ -139,7 +139,7 @@
     "FONT": "Font",
     "FONT_ADD": "＋  Add custom font…",
     "FONT_ADDED": "Added '{0}'.",
-    "FONT_DEFAULT": "Default (Cookie Run Bold)",
+    "FONT_DEFAULT_OF": "Default ({0})",
     "FONT_DELETE": "Delete",
     "FONT_DELETED": "Deleted '{0}'.",
     "FONT_DELETE_CONFIRM": "Sure?",
@@ -489,6 +489,7 @@
     "UPDATE_UNDO": "Undo",
     "UPDATE_UP_TO_DATE": "You're up to date.",
     "VISUALS": "Visuals",
-    "WINDOW_OPACITY": "Window Opacity"
+    "WINDOW_OPACITY": "Window Opacity",
+    "FONT_DEFAULT": "Default (Cookie Run Bold)"
   }
 }
