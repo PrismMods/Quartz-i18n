@@ -1632,6 +1632,12 @@
     "DISCORD_VOICE": "语音",
     "DISCORD_VOICE_INSTALL": "安装语音运行库",
     "DISCORD_VOICE_REMOVE": "卸载语音运行库",
-    "MINECRAFT_EMPTY": "这里还没有内容 — 该标签页仅作占位。"
+    "MINECRAFT_EMPTY": "这里还没有内容 — 该标签页仅作占位。",
+    "ANCHOR_CLOSEST": "最近",
+    "FEATURE_OFF_HINT": "此功能已关闭。开启后即可看到其设置。",
+    "FEATURE_OFF_NEEDS": "此功能需要{0}。开启时会一并开启。",
+    "FEATURE_TURN_ON": "开启",
+    "FEATURE_PAGE_ENABLE": "使用此功能",
+    "FEATURE_OPEN": "打开"
   }
 }
