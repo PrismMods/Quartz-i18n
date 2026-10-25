@@ -45,7 +45,7 @@
     "CREDITS_DONORS_BODY": "Refreshin",
     "CREDITS_LICENSE": "基于GPLv3协议开源",
     "CREDITS_PORTS": "移植与引用作品",
-    "CREDITS_PORTS_BODY": "Overlayer — 界面基础（modlist.org）\nDM Note (lee-sihun) — 按键查看器编辑器图标\nDecoPreview (rdzip) — 装饰预览，GPLv3\nFlipAndRotateTiles (tjwogud) — 翻转与旋转轨道\nAdofaiTweaks — 编辑器轨道角度读数\nHzHitSoundRenderer — 渲染所有命中音效\nJipperKeyViewer — 108键布局预设\nIridium (Xbodwf) — 轨道圆角、优化，LGPLv3",
+    "CREDITS_PORTS_BODY": "Overlayer — 界面基础（modlist.org）\nDM Note (lee-sihun) — 按键查看器编辑器图标\nDecoPreview (rdzip) — 装饰预览，GPLv3\nFlipAndRotateTiles (tjwogud) — 翻转与旋转轨道\nAdofaiTweaks — 编辑器轨道角度读数\nHzHitSoundRenderer — 渲染所有命中音效\nJipperKeyViewer — 108键布局预设\nIridium (Xbodwf) — 轨道圆角、优化，LGPLv3\nAntiChatter (copecone) — 防按键抖动，MIT",
     "CREDITS_SUBTITLE": "作者：koren、sbrothers7 及其他贡献者",
     "CREDITS_TEAM": "开发团队",
     "CREDITS_TEAM_BODY": "koren — 主要开发者\nsbrothers7 — 开发者\nkkitut — 开发者\nsquare3ang — 开发者",
@@ -1606,6 +1606,16 @@
     "DISCORD_VOICE": "语音",
     "DISCORD_VOICE_INSTALL": "安装语音运行库",
     "DISCORD_VOICE_REMOVE": "卸载语音运行库",
-    "MINECRAFT_EMPTY": "这里还没有内容 — 该标签页仅作占位。"
+    "MINECRAFT_EMPTY": "这里还没有内容 — 该标签页仅作占位。",
+    "FONT_DEFAULT_OF": "默认（{0}）",
+    "FONT_OVERLAY": "字体",
+    "FONT_OVERLAY_GLOBAL": "全局字体（{0}）",
+    "FONT_SCALE": "字体大小",
+    "FONT_LINE_SPACING": "行距",
+    "DESC_FONT_SCALE": "所选字体的大小倍率。自定义字体显示得比其他字体小时使用。每个字体单独保存。",
+    "DESC_FONT_LINE_SPACING": "所选字体的行高倍率。每个字体单独保存。",
+    "REORGANIZE_ROTATION": "旋转",
+    "DESC_KEYVIEWER_EDITOR_TAB_DUPLICATE": "将正在编辑的手键标签页连同其中所有元素复制到新标签页。",
+    "DESC_KEYVIEWER_EDITOR_FOOT_DUPLICATE": "将当前打开的脚键标签页连同其中所有元素复制到新的脚键标签页。"
   }
 }
