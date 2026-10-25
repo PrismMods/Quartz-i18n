@@ -1419,21 +1419,6 @@
     "TW_SBPM_SHOW_BOTH": "BPM + Multiplier",
     "TW_SBPM_SHOW_BPM": "BPM",
     "TW_SBPM_SHOW_LABEL": "Speed Label Shows",
-    "TW_SBPM_SHOW_MULT": "Multiplier",
-    "DISCORD": "Discord",
-    "EXIT_REORGANIZE": "Exit Reorganize",
-    "EXIT_REORGANIZE_TIP": "Hold to move this button. Middle-click to reset it.",
-    "FAQ": "FAQ",
-    "FAQ_LOAD_ERROR": "Couldn't read the built-in questions. {0}",
-    "FAQ_NONE": "No questions to show.",
-    "FONT_DEFAULT": "Default (Cookie Run Bold)",
-    "HELP": "Help",
-    "SECTION_DISCORD": "Discord",
-    "DISCORD_PREVIEW_NOTE": "This is a layout preview. Nothing here talks to Discord yet.",
-    "DISCORD_QR": "Log In with QR",
-    "DISCORD_QR_CANCEL": "Cancel",
-    "DISCORD_LOGIN": "Log In",
-    "DISCORD_FORGET": "Forget Saved Token",
-    "DISCORD_TOKEN": "Discord token"
+    "TW_SBPM_SHOW_MULT": "Multiplier"
   }
 }

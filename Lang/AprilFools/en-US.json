@@ -489,7 +489,6 @@
     "UPDATE_UNDO": "Undo",
     "UPDATE_UP_TO_DATE": "You're up to date.",
     "VISUALS": "Visuals",
-    "WINDOW_OPACITY": "Window Opacity",
-    "FONT_DEFAULT": "Default (Cookie Run Bold)"
+    "WINDOW_OPACITY": "Window Opacity"
   }
 }
